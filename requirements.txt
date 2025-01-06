@@ -1,0 +1,11 @@
+streamlit 
+langchain 
+langchain-community
+huggingface_hub 
+openai 
+google-search-results 
+tiktoken 
+chromadb 
+rank_bm25 
+faiss-cpu
+PyPDF2
