@@ -1,9 +1,10 @@
 import streamlit as st
 import os
-from langchain.retrievers import BM25Retriever, EnsembleRetriever
-from langchain.vectorstores import FAISS
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_classic.retrievers.ensemble import EnsembleRetriever
+from langchain_community.retrievers.bm25 import BM25Retriever
+from langchain_community.vectorstores import FAISS
+from langchain_openai import OpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 import PyPDF2
 import tempfile
 
@@ -130,21 +131,21 @@ if search_query:
    
     with col1:
         st.markdown("### Keyword Search (BM25)")
-        bm25_results = bm25_retriever.get_relevant_documents(search_query)
+        bm25_results = bm25_retriever.invoke(search_query)
         for i, doc in enumerate(bm25_results, 1):
             with st.expander(f"Result {i}"):
                 st.markdown(doc.page_content)
    
     with col2:
         st.markdown("### Semantic Search (FAISS)")
-        faiss_results = faiss_retriever.get_relevant_documents(search_query)
+        faiss_results = faiss_retriever.invoke(search_query)
         for i, doc in enumerate(faiss_results, 1):
             with st.expander(f"Result {i}"):
                 st.markdown(doc.page_content)
    
     with col3:
         st.markdown("### Hybrid Search")
-        ensemble_results = ensemble_retriever.get_relevant_documents(search_query)
+        ensemble_results = ensemble_retriever.invoke(search_query)
         for i, doc in enumerate(ensemble_results, 1):
             with st.expander(f"Result {i}"):
                 st.markdown(doc.page_content)
